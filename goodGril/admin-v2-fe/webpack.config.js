@@ -10,6 +10,11 @@ module.exports = {
     publicPath:'/dist/',
     filename: 'js/app.js'
   },
+  resolve:{
+	alias:{
+		page:path.resolve(__dirname, 'src/page')
+	}
+  },
   module: {
 	  rules: [
 	  //react（jsx）语法处理
@@ -80,7 +85,11 @@ module.exports = {
   		filename:'js/base.js'
   	})
   ],
+  //404的时候跳转到一个固定的页面
   devServer: {
-    port:8086
+    port:8086,
+    historyApiFallback:{
+    	index:'/dist/index.html'
+    }
    }
 };
