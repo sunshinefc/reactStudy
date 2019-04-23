@@ -1,7 +1,8 @@
 import React from 'react';
 import MUtil from 'util/mm.jsx';
-
+import User from 'service/user-service.jsx';
 const _mm=new MUtil();
+const _user=new User();
 import './index.scss'
 
 class Login extends React.Component{
@@ -23,13 +24,9 @@ class Login extends React.Component{
     }
     //当用户提交表单
     onSubmit(e){
-        _mm.request({
-            type:'post',
-            url:'/manage/user/login.do',
-            data:{
+        _user.login({
                 username: this.state.username,
-                password:this.state.password
-            }
+                password:this.state.password           
         }).then((res)=>{
 
         },(err)=>{
