@@ -10,8 +10,13 @@ class Login extends React.Component{
         super(props);
         this.state={
             username:'',
-            password:''
+            password:'',
+            redirect:_mm.getUrlParam('redirect')||'/'
         }
+    }
+    componentWillMount(){
+        document.title='登录 - HISTORY ADMIN'
+
     }
     //当用户名/密码 发生改变
     onInputChange(e){
@@ -22,16 +27,32 @@ class Login extends React.Component{
         })
 
     }
+    onInputKeyup(e){
+        if(e.keyCode===13){
+            this.onSubmit();
+        }
+    }
     //当用户提交表单
     onSubmit(e){
-        _user.login({
+        let loginInfo={
                 username: this.state.username,
                 password:this.state.password           
-        }).then((res)=>{
-
-        },(err)=>{
-
-        })
+        },
+        checkResult=_user.checkLoginInfo(loginInfo);
+        console.log(checkResult)
+        //验证通过
+        if(checkResult.status){
+            _user.login(loginInfo).then((res)=>{
+                this.props.history.push(this.state.redirect)
+            },(errMsg)=>{
+                _mm.errorTips(errMsg);
+            })
+        }
+        //验证不通过
+        else{
+            _mm.errorTips(checkResult.msg);
+        }
+        
     }
 
     render() {
@@ -47,6 +68,7 @@ class Login extends React.Component{
                                            name="username"
                                            className="form-control"
                                            placeholder="请输入用户名"
+                                           onKeyUp={e=>this.onInputKeyup(e)}
                                            onChange={e=>this.onInputChange(e)}
                                     />
                                 </div>
@@ -55,6 +77,7 @@ class Login extends React.Component{
                                            name="password"
                                            className="form-control"
                                            placeholder="请输入密码"
+                                           onKeyUp={e=>this.onInputKeyup(e)}
                                            onChange={e=>this.onInputChange(e)}
                                     />
                                 </div>
