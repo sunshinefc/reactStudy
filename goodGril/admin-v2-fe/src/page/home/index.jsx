@@ -5,9 +5,9 @@ class Home extends React.Component{
 	render(){
 		return (
 			<div id="page-wrapper">
-				<PageTitle title="首页">
-					<button className="btn btn-warning">错误</button>
-				</PageTitle>
+				<PageTitle title="首页"/>
+
+
 
 				<div className="row">
 					<div className="col-md-12">
