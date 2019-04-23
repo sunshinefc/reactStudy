@@ -78,7 +78,8 @@ module.exports = {
   	new ExtractTextPlugin("css/[name].css"),
   	//处理html文件
   	new HtmlWebpackPlugin({
-  		template:'./src/index.html'
+  		template:'./src/index.html',
+		favicon: './favicon.ico'
   	}),
   	//提出公共模块
   	new webpack.optimize.CommonsChunkPlugin({
