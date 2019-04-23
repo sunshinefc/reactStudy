@@ -6,9 +6,6 @@ class Home extends React.Component{
 		return (
 			<div id="page-wrapper">
 				<PageTitle title="首页"/>
-
-
-
 				<div className="row">
 					<div className="col-md-12">
 						body
