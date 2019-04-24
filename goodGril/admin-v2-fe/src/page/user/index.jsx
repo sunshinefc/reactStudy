@@ -11,7 +11,9 @@ class UserList extends React.Component{
 	constructor(props){
 		super(props);
 		this.state={
-			pageNum:1
+			list:[],
+			pageNum:1,
+			firstLoading:true
 		}
 	}
 	componentDidMount(){
@@ -19,12 +21,46 @@ class UserList extends React.Component{
 	}
 	loadUserList(){
 		_user.getUserList(this.state.pageNum).then(res=>{
-			this.setState(res)
+			this.setState(res,()=>{
+				this.setState({
+					firstLoading:false
+				})
+			})
 		},errMsg=>{
+			this.setState({
+				list:[]
+			});
 			_mm.errorTips(errMsg)
 		});
 	}
+	//页数发生变化的时候  setState异步函数  执行完之后执行一个函数
+	onPageNumChange(pageNum){
+		this.setState({
+			pageNum:pageNum
+		},()=>{
+			this.loadUserList();
+		})
+	}
 	render(){
+		let listBody=this.state.list.map((user,index)=>{
+						return (
+							<tr key={index}>
+								<th>{user.id}</th>
+								<th>{user.username}</th>
+								<th>{user.email}</th>
+								<th>{user.phone}</th>
+								<th>{new Date(user.createTime).toLocaleString()}</th>
+							</tr>
+						);
+					});
+		let listError=(
+			<tr>
+				<td colSpan="5" className="text-center">
+				  {this.state.firstLoading?'正在加载数据...':'没有找到相应的结果'}
+				</td>
+			</tr>
+		);
+		let tableBody=this.state.list.length>0?listBody:listError;
 		return (
 			<div id="page-wrapper">
 				<PageTitle title="用户列表"/>
@@ -33,27 +69,22 @@ class UserList extends React.Component{
 						<table className="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th>id</th>
-									<th>dd</th>
-									<th>dd</th>
-									<th>dd</th>
-									<th>dd</th>
+									<th>ID</th>
+									<th>用户名</th>
+									<th>邮箱</th>
+									<th>电话</th>
+									<th>注册时间</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<th>1212</th>
-									<th>1212</th>
-									<th>1212</th>
-									<th>1212</th>
-									<th>1212</th>
-								</tr>
+								{tableBody}
 							</tbody>
 						</table>
 					</div>
-
 				</div>
-				<Pagination current={11} total={200} onChange={(pageNum)=>{console.log(pageNum)}}/>
+				<Pagination current={this.state.pageNum} 
+					total={this.state.total} 
+					onChange={(pageNum)=>this.onPageNumChange(pageNum)}/>
 			</div>
 		);
 	}
