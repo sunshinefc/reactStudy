@@ -4,6 +4,7 @@ import Product from 'service/product-service.jsx';
 import PageTitle from 'component/page-title/index.jsx';
 
 import CategorySelect from './category-selector.jsx';
+import FileUploader from 'util/file-uploader/index.jsx';
 
 
 
@@ -29,7 +30,7 @@ class ProductSave extends React.Component{
 		return (
 			<div id="page-wrapper">
 				<PageTitle title="添加商品"/>
-				<form className="form-horizontal">
+				<div className="form-horizontal">
 				  <div className="form-group">
 				    <label  className="col-md-2 control-label">商品名称</label>
 				    <div className="col-md-5">
@@ -44,7 +45,6 @@ class ProductSave extends React.Component{
 				  </div>
 				  <div className="form-group">
 				    <label  className="col-md-2 control-label">所属分类</label>
-				   
 				    <CategorySelect 
 				    	onCategoryChange={
 				    	(categoryId,parentCategoryId)=>this.onCategoryChange(categoryId,parentCategoryId)}/>  
@@ -73,7 +73,7 @@ class ProductSave extends React.Component{
 				    <label  className="col-md-2 control-label">商品图片</label>
 				    <div className="col-md-10">
 				    	<div className="input-group">
-						  xxx
+						  <FileUploader />
 						</div>
 				      
 				    </div>
@@ -93,7 +93,7 @@ class ProductSave extends React.Component{
 				      <button type="submit" className="btn btn-primary">提交</button>
 				    </div>
 				  </div>
-				</form>
+				</div>
 			</div>
 		)
 	}
