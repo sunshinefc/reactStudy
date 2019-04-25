@@ -3,13 +3,28 @@ import MUtil from 'util/mm.jsx';
 import Product from 'service/product-service.jsx';
 import PageTitle from 'component/page-title/index.jsx';
 
-import CategorySelect from 'product/index/categary-selector.jsx';
+import CategorySelect from './category-selector.jsx';
 
 
 
 const _mm=new MUtil();
 const _product=new Product();
 class ProductSave extends React.Component{
+	constructor(props){
+		super(props);
+		this.state={
+			categoryId:0,
+			parentCategoryId:0
+		}
+	}
+	onCategoryChange(categoryId,parentCategoryId){
+		console.log(1)
+		console.log('categoryId:',categoryId)
+		console.log('parentCategoryId:',parentCategoryId)
+	}
+	test(){
+		console.log(2222)
+	}
 	render(){
 		return (
 			<div id="page-wrapper">
@@ -29,8 +44,10 @@ class ProductSave extends React.Component{
 				  </div>
 				  <div className="form-group">
 				    <label  className="col-md-2 control-label">所属分类</label>
-				    <CategorySelect />
 				   
+				    <CategorySelect 
+				    	onCategoryChange={
+				    	(categoryId,parentCategoryId)=>this.onCategoryChange(categoryId,parentCategoryId)}/>  
 				  </div>
 				  <div className="form-group">
 				    <label  className="col-md-2 control-label">商品价格</label>
