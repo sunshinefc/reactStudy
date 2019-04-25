@@ -22,7 +22,6 @@ class UserList extends React.Component{
 	loadUserList(){
 		_user.getUserList(this.state.pageNum).then(res=>{
 			this.setState(res)
-			})
 		},errMsg=>{
 			this.setState({
 				list:[]
@@ -42,7 +41,7 @@ class UserList extends React.Component{
 		return (
 			<div id="page-wrapper">
 				<PageTitle title="用户列表"/>
-				<TableList tableHeads=['ID','用户名','邮箱','电话','注册时间']>
+				<TableList tableHeads={['ID','用户名','邮箱','电话','注册时间']}>
 					{
 						this.state.list.map((user,index)=>{
 							return (
