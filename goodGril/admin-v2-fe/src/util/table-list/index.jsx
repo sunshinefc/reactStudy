@@ -18,7 +18,13 @@ class TableList extends React.Component{
 	render(){
 		//表头信息
 		let tableHeader=this.props.tableHeads.map(
-			(tableHead,index)=><th key={index}>{tableHead}</th>);
+			(tableHead,index)=>{
+				if(typeof tableHead ==='Object'){
+					return <th key={index} width={tableHead.width}>{tableHead.name}</th>
+				}else if(typeof tableHead ==='String'){
+					return <th key={index}>{tableHead}</th>
+				}
+			});
 		//列表内容
 		let listBody=this.props.children;
 		//列表的信息

@@ -38,19 +38,35 @@ class ProductList extends React.Component{
 		})
 	}
 	render(){
+		let tableHeads=[
+			{name: '商品ID', width: '10%'},
+			{name: '商品信息', width: '50%'},
+			{name: '价格', width: '10%'},
+			{name: '状态', width: '15%'},
+			{name: '操作', width: '15%'}
+		]
 		return (
 			<div id="page-wrapper">
 				<PageTitle title="商品列表"/>
-				<TableList tableHeads={['ID','用户名','邮箱','电话','注册时间']}>
+				<TableList tableHeads={tableHeads}>
 					{
-						this.state.list.map((user,index)=>{
+						this.state.list.map((product,index)=>{
 							return (
 								<tr key={index}>
-									<th>{user.id}</th>
-									<th>{user.name}</th>
-									<th>{user.price}</th>
-									<th>{user.phone}</th>
-									<th>{new Date(user.createTime).toLocaleString()}</th>
+									<td>{product.id}</td>
+									<td>
+										<p>{product.name}</p>
+										<p>{product.subtitle}</p>
+									</td>
+									<td>￥{product.price}</td>
+									<td>
+										<span>{product.status==1?'在售':'已下架'}</span>
+									</td>
+									<td>
+										<Link to={`/product/detail/${product.id}`}>查看详情</Link>
+										<Link to={`/product/save/${product.id}`}>编辑</Link>
+
+									</td>
 								</tr>
 							);
 						})
