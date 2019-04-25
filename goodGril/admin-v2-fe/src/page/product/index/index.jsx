@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import MUtil from 'util/mm.jsx';
 import Product from 'service/product-service.jsx';
@@ -91,7 +91,15 @@ class ProductList extends React.Component{
 		]
 		return (
 			<div id="page-wrapper">
-				<PageTitle title="商品列表"/>
+				<PageTitle title="商品列表">
+					
+				</PageTitle>
+				<div className="page-header-right">
+						<Link className="btn btn-primary" to='/product/save'>
+							<i className="fa fa-plus"></i>
+							<span>添加商品</span>
+						</Link>
+					</div>
 				<ListSearch onSearch={(searchType,searchKeyword)=>{this.onSearch(searchType,searchKeyword)}}/>
 				<TableList tableHeads={tableHeads}>
 					{

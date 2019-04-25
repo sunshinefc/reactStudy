@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import PageTitle from 'component/page-title/index.jsx';
 class Error extends React.Component{

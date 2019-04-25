@@ -3,6 +3,7 @@ import React from 'react';
 import NavTop from 'component/nav-top/index.jsx';
 import NavSide from 'component/nav-side/index.jsx';
 import './theme.css'
+import './index.scss'
 //头部导航  侧边导航  子组件
 class Layout extends React.Component{
 	constructor(props){
