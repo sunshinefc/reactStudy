@@ -19,9 +19,9 @@ class TableList extends React.Component{
 		//表头信息
 		let tableHeader=this.props.tableHeads.map(
 			(tableHead,index)=>{
-				if(typeof tableHead ==='Object'){
+				if(typeof tableHead ==='object'){
 					return <th key={index} width={tableHead.width}>{tableHead.name}</th>
-				}else if(typeof tableHead ==='String'){
+				}else if(typeof tableHead ==='string'){
 					return <th key={index}>{tableHead}</th>
 				}
 			});
@@ -30,8 +30,8 @@ class TableList extends React.Component{
 		//列表的信息
 		let listInfo=(
 			<tr>
-				<td colSpan={this.props.tableHeads} className="text-center">
-				  {this.state.firstLoading?'正在加载数据...':'没有找到相应的结果'}
+				<td colSpan={this.props.tableHeads.length} className="text-center">
+				  {this.state.isFirstLoading?'正在加载数据...':'没有找到相应的结果'}
 				</td>
 			</tr>
 		);

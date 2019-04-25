@@ -11,5 +11,13 @@ class Product{
             data:{pageNum:pageNum}
         })
 	}
+	//变更商品销售状态
+	SetProductStatus(productInfo){
+		return _mm.request({
+            type:'post',
+            url:'/manage/product/set_sale_status.do',
+            data:productInfo
+        })
+	}
 }
 export default Product;
