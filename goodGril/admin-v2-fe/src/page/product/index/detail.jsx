@@ -43,7 +43,6 @@ class ProductDetail extends React.Component{
 						url:res.imageHost + imgUri
 					}
 				});
-				
 				this.setState(res);
 			},(errMsg)=>{
 				_mm.errorTips(errMsg);
@@ -120,8 +119,7 @@ class ProductDetail extends React.Component{
 				  </div>
 				  <div className="form-group">
 				    <label  className="col-md-2 control-label">商品详情</label>
-				    <div className="col-md-10">
-				    	{this.state.detail} 
+				    <div className="col-md-10" dangerouslySetInnerHTML={{__html:this.state.detail}}>
 				    </div>
 				  </div>				  
 				</div>
