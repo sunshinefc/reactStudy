@@ -103,8 +103,19 @@ class Product{
             data:{
             	categoryId:parentCategoryId||0
             }
-        })
+        });
 
+	 }
+	 //更新品类名字
+	 updateCategoryName(categoryId,categoryName){
+	 	return _mm.request({
+            type:'post',
+            url:'/manage/category/set_category_name.do',
+            data:{
+            	categoryId:categoryId,
+            	categoryName:categoryName
+            }
+        })
 	 }
 
 }

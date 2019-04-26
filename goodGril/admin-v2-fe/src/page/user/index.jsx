@@ -46,11 +46,11 @@ class UserList extends React.Component{
 						this.state.list.map((user,index)=>{
 							return (
 								<tr key={index}>
-									<th>{user.id}</th>
-									<th>{user.username}</th>
-									<th>{user.email}</th>
-									<th>{user.phone}</th>
-									<th>{new Date(user.createTime).toLocaleString()}</th>
+									<td>{user.id}</td>
+									<td>{user.username}</td>
+									<td>{user.email}</td>
+									<td>{user.phone}</td>
+									<td>{new Date(user.createTime).toLocaleString()}</td>
 								</tr>
 							);
 						})
