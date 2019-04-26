@@ -6,6 +6,7 @@ import PageTitle from 'component/page-title/index.jsx';
 import CategorySelect from './category-selector.jsx';
 import FileUploader from 'util/file-uploader/index.jsx';
 
+import './save.scss';
 
 
 const _mm=new MUtil();
@@ -26,18 +27,27 @@ class ProductSave extends React.Component{
 	}
 	//上传图片成功
 	onUploadSuccess(res){
+		let subImages=this.state.subImages;
+		subImages.push(res);
 		this.setState({
-			subImages:this.state.subImages.push(res)
+			subImages:subImages
 
 		})
-
 	}
 	//上传图片失败
-	onUploadError(error){
-		_mm.errTips(error.message || '上传图片失败')
+	onUploadError(errMsg){
+		_mm.errTips(errMsg);
 
 	}
-	
+	//删除图片
+	onImageDelete(e){
+		let index=parseInt(e.target.getAttribute('index')),
+			subImages=this.state.subImages;
+		subImages.splice(index,1);
+		this.setState({
+			subImages:subImages
+		})
+	}
 	render(){
 		return (
 			<div id="page-wrapper">
@@ -86,14 +96,19 @@ class ProductSave extends React.Component{
 				    <div className="col-md-10">
 				    	{
 				    		this.state.subImages.length?this.state.subImages.map(
-				    			(image,index)=>(<img key={index} src={image.url}/>))
+				    			(image,index)=>(
+				    				<div className="img-con" key={index}>
+				    					<img className="img" src={image.url}/>
+				    					<i className="fa fa-close" index={index} onClick={(e)=>this.onImageDelete(e)}></i>
+				    				</div>
+				    			))
 				    		: (<div>请上传图片</div>)
 				    	}
 				    </div>
-				    <div className="col-md-10">
+				    <div className="col-md-offset-2 col-md-10 file-upload-con">
 				    	<div className="input-group">
 						  <FileUploader onSuccess={(res)=>this.onUploadSuccess(res)}
-						  	onError={(err)=>this.onUploadError(err)}/>
+						  	onError={(errMsg)=>this.onUploadError(errMsg)}/>
 						</div>
 				      
 				    </div>

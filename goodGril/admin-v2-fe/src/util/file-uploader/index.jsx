@@ -9,12 +9,16 @@ class FileUploader extends React.Component{
 			fileFieldName:'upload_file',
 			dataType:'json',
 			chooseAndUpload:true,
-			uploadSuccess:this.props.onSuccess,
-			uploadError:this.props.onError
+			uploadSuccess:(res)=>{
+				this.props.onSuccess(res.data)
+			},
+			uploadError:(err)=>{
+				this.props.onError(err.message || '上传图片出错啦');
+			}
 		}
 		return (
 			<FileUpload options={options}>
-				<button ref="chooseAndUpload">请选择图片</button>
+				<button className="btn btn-xs btn-default" ref="chooseAndUpload">请选择图片</button>
 			</FileUpload>
 		)	        
 	}
