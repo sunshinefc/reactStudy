@@ -21,6 +21,17 @@ class Product{
             data:data
         })
 	}
+	//获取商品详情
+	getProduct(productId){
+		return _mm.request({
+            type:'post',
+            url:'/manage/product/detail.do',
+            data:{
+            	productId:productId || 0
+            }
+        })
+
+	}
 	//变更商品销售状态
 	SetProductStatus(productInfo){
 		return _mm.request({

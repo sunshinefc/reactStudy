@@ -16,6 +16,7 @@ class ProductSave extends React.Component{
 	constructor(props){
 		super(props);
 		this.state={
+			id:this.props.match.params.pid,
 			name:'',
 			subtitle:'',
 			categoryId:0,
@@ -27,10 +28,33 @@ class ProductSave extends React.Component{
 			status:1 //商品状态1为在售
 		}
 	}
+	componentDidMount(){
+		this.loadProduct();
+	}
+	//加载商品详情
+	loadProduct(){
+		//有id的时候，表示是编辑功能，需要表单回填
+		if(this.state.id){
+			_product.getProduct(this.state.id).then((res)=>{
+				let images=res.subImages.split(',');
+				res.subImages=images.map((imgUri)=>{
+					return {
+						uri:imgUri,
+						url:res.imageHost + imgUri
+					}
+				});
+				res.defaultDetail=res.detail;
+				this.setState(res);
+				console.log(res)
+			},(errMsg)=>{
+				_mm.errorTips(errMsg);
+			})
+		}
+	}
 	//简单字段的改变  eg：商品名称，描述，价格，库存
 	onValueChange(e){
 		let name=e.target.name,
-			value=e.target.value;
+			value=e.target.value.trim();
 		this.setState({
 			[name]:value
 		})
@@ -68,7 +92,6 @@ class ProductSave extends React.Component{
 	}
 	//富文本编辑器的变化
 	onDetailValueChange(value){
-		console.log(value)
 		this.setState({
 			detail:value
 		})
@@ -81,15 +104,18 @@ class ProductSave extends React.Component{
 		let product={
 			name:this.state.name,
 			subtitle:this.state.subtitle,
-			categoryId:pareInt(this.state.categoryId),
-			parentCategoryId:pareInt(this.state.parentCategoryId),
+			categoryId:parseInt(this.state.categoryId),
+			parentCategoryId:parseInt(this.state.parentCategoryId),
 			subImages:this.getSubImagesString(),
 			detail:this.state.detail,
-			price:pareFloat(this.state.price),
-			stock:pareInt(this.state.stock),
+			price:parseFloat(this.state.price),
+			stock:parseInt(this.state.stock),
 			status:this.state.status
 		},
 		productCheckResult=_product.checkProduct(product);
+		if(this.state.id){
+			product.id=this.state.id;
+		}
 		//表单验证成功
 		if(productCheckResult.status){
 			_product.saveProduct(product).then(res=>{
@@ -118,6 +144,7 @@ class ProductSave extends React.Component{
 				    <div className="col-md-5">
 				      <input type="text" className="form-control"  
 				      	placeholder="请输入商品名称"
+				      	value={this.state.name}
 				      	name="name"
 				      	onChange={(e)=>this.onValueChange(e)}/>
 				    </div>
@@ -128,6 +155,7 @@ class ProductSave extends React.Component{
 				      <input type="text" className="form-control" 
 				      	placeholder="请输入商品描述"
 				      	name="subtitle"
+				      	value={this.state.subtitle}
 				      	onChange={(e)=>this.onValueChange(e)}
 				      	/>
 				    </div>
@@ -135,6 +163,8 @@ class ProductSave extends React.Component{
 				  <div className="form-group">
 				    <label  className="col-md-2 control-label">所属分类</label>
 				    <CategorySelect 
+				    	categoryId={this.state.categoryId}
+				    	parentCategoryId={this.state.parentCategoryId}
 				    	onCategoryChange={
 				    	(categoryId,parentCategoryId)=>this.onCategoryChange(categoryId,parentCategoryId)}/>  
 				  </div>
@@ -145,6 +175,7 @@ class ProductSave extends React.Component{
 						  <input type="number" className="form-control" 
 						  	placeholder="价格"
 						  	name="price"
+						  	value={this.state.price}
 				      		onChange={(e)=>this.onValueChange(e)}/>
 						  <span className="input-group-addon">元</span>
 						</div>
@@ -158,6 +189,7 @@ class ProductSave extends React.Component{
 						  <input type="number" className="form-control" 
 						  	placeholder="库存"
 						  	name="stock"
+						  	value={this.state.stock}
 				      		onChange={(e)=>this.onValueChange(e)}/>
 						  <span className="input-group-addon">件</span>
 						</div>
@@ -189,7 +221,10 @@ class ProductSave extends React.Component{
 				  <div className="form-group">
 				    <label  className="col-md-2 control-label">商品详情</label>
 				    <div className="col-md-10">
-				    	<RichEditor onValueChange={(value)=>this.onDetailValueChange(value)}/>
+				    	<RichEditor
+				    		detail={this.state.detail} 
+				    		defaultDetail={this.state.defaultDetail}
+				    		onValueChange={(value)=>this.onDetailValueChange(value)}/>
 				      
 				    </div>
 				  </div>

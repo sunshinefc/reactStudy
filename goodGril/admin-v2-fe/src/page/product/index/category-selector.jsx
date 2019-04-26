@@ -19,6 +19,33 @@ class CategorySelect extends React.Component{
 	componentDidMount(){
 		this.loadFirstCategory();
 	}
+	//props变化的时候触发
+	componentWillReceiveProps(nextProps){
+		let categoryIdChange=this.props.categoryId !=nextProps.categoryId,
+			parentCategoryIdChange=this.props.parentCategoryIdChange !=nextProps.parentCategoryIdChange
+			//数据没有发生变化的时候，直接不做处理
+			if(!categoryIdChange&&!parentCategoryIdChange){
+				return;
+			}
+			//加入只有一级品类
+			if(nextProps.parentCategoryId===0){
+				this.setState({
+					firstCategoryId:nextProps.categoryId,
+					secondCategoryId:0
+				})
+			}
+			//有二级品类
+			else{
+				this.setState({
+					firstCategoryId:nextProps.parentCategoryId,
+					secondCategoryId:nextProps.categoryId
+				},()=>{
+					parentCategoryIdChange && this.loadSecondCategory();
+				})
+
+			}
+
+	}
 	//加载一级分类  传根把一级品类传过来  传一级品类 把二级品类传过来
 	loadFirstCategory(){
 		_product.getCategoryList().then(res=>{
@@ -84,6 +111,7 @@ class CategorySelect extends React.Component{
 		return (
 			<div className="col-md-10">
 		      <select name=""  className="form-control cate-select"
+		      	value={this.state.firstCategoryId}
 		      	onChange={(e)=>this.onFirstCategoryChange(e)}>
 		      	<option value="">请选择一级分类</option>
 		      	{
@@ -94,7 +122,8 @@ class CategorySelect extends React.Component{
 		      </select>
 		      {
 		      	this.state.secondCategoryList.length?
-			      	(<select name=""  className="form-control cate-select"
+			      	<select name=""  className="form-control cate-select"
+			      		value={this.state.secondCategoryId}
 			      		onChange={(e)=>this.onSecondCategoryChange(e)}>
 			      	<option value="">请选择二级分类</option>
 			      	{
@@ -102,7 +131,7 @@ class CategorySelect extends React.Component{
 			      			(category,index)=><option value={category.id} key={index}>{category.name}</option>
 			      			)
 			      	}
-			      </select>):null
+			      </select>:null
 		      }
 		      
 		    </div>
