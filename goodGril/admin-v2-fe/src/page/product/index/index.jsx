@@ -94,7 +94,7 @@ class ProductList extends React.Component{
 				<PageTitle title="商品列表">
 					
 				</PageTitle>
-				<div className="page-header-right">
+					<div className="page-header-right">
 						<Link className="btn btn-primary" to='/product/save'>
 							<i className="fa fa-plus"></i>
 							<span>添加商品</span>

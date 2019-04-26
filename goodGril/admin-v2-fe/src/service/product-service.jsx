@@ -3,7 +3,7 @@ import MUtil from 'util/mm.jsx';
 const _mm=new MUtil();
 
 class Product{
-	//获取产品列表
+	//获取商品列表
 	getProductList(listParam){
 		let url='',
 			data={};
@@ -96,6 +96,7 @@ class Product{
 	/*
 	 *品类相关
 	 */
+	 //根据父品类id获取品类列表
 	 getCategoryList(parentCategoryId){
 	 	return _mm.request({
             type:'post',
@@ -106,16 +107,22 @@ class Product{
         });
 
 	 }
-	 //更新品类名字
-	 updateCategoryName(categoryId,categoryName){
+	 //修改品类名称
+	 updateCategoryName(category){
 	 	return _mm.request({
             type:'post',
             url:'/manage/category/set_category_name.do',
-            data:{
-            	categoryId:categoryId,
-            	categoryName:categoryName
-            }
+            data:category
         })
+	 }
+	 //新增品类
+	 saveCategory(category){
+	 	return _mm.request({
+            type:'post',
+            url:'/manage/category/add_category.do',
+            data:category
+        })
+
 	 }
 
 }
