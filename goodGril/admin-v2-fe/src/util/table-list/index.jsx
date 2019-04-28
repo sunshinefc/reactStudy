@@ -9,7 +9,7 @@ class TableList extends React.Component{
 			isFirstLoading:true
 		}
 	}
-	conponentWillReceiveProps(){
+	componentWillReceiveProps(){
 		//列表只有第一次加载的时候 isFirstLoading为true，其他情况为false
 		this.setState({
 			isFirstLoading:false
