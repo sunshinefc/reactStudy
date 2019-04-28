@@ -13,7 +13,7 @@ class Order{
 		}else if(listParam.listType==='search'){
 			url='/manage/order/search.do';
 			data.pageNum=listParam.pageNum;
-			data[listParam.searchType]=listParam.keyword;
+			data.orderNo=listParam.orderNo;
 		}
 		return _mm.request({
             type:'post',
