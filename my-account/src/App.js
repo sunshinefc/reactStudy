@@ -59,7 +59,10 @@ function App() {
           Learn React
         </a>
       </header>
-      <PriceList items={items}/>
+      <PriceList items={items}
+        onModifyItem={(item)=>{alert(item.id)}}
+        onDeleteItem={(item)=>{alert(item.id)}}
+      />
     </div>
   );
 }
