@@ -54,4 +54,7 @@ PriceList.propTypes={
 	onModifyItem:PropTypes.func.isRequired,
 	onDeleteItem:PropTypes.func.isRequired
 }
+PriceList.defaultProps={
+	onModifyItem:()=>{}
+}
 export default PriceList;
