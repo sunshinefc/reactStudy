@@ -2,7 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
-import PriceList from './containers/PriceList';
+import PriceList from './components/PriceList';
+import ViewTab from './components/ViewTab';
+
 const items=[
   {
     "id":1,
@@ -17,7 +19,7 @@ const items=[
     }
   },
   {
-    "id":4,
+    "id":2,
     "title":"去云南旅游",
     "price":400,
     "date":"2018-09-12",
@@ -63,6 +65,7 @@ function App() {
         onModifyItem={(item)=>{alert(item.id)}}
         onDeleteItem={(item)=>{alert(item.id)}}
       />
+      <ViewTab activeTab='chart'/>
     </div>
   );
 }
