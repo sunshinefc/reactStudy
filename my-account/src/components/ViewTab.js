@@ -10,8 +10,10 @@ const generateLinkClass=(current,view)=>{
 const ViewTab=({activeTab ,onTabChange})=>(
 	<ul className="nav nav-tabs nav-fill my-4">
 		<li className="nav-item">
-			<a className={generateLinkClass(activeTab,LIST_VIEW)} href="#"
-			onClick={(event)=>{event.preventDefault();onTabChange(LIST_VIEW)}}>
+			<a 
+				className={generateLinkClass(activeTab,LIST_VIEW)} 
+				href="#"
+				onClick={(event)=>{event.preventDefault();onTabChange(LIST_VIEW)}}>
 				<Ionicon className="rounded-circle mr-2"
 					fontSize="25px"
 					color={"#007bff"}
@@ -20,8 +22,10 @@ const ViewTab=({activeTab ,onTabChange})=>(
 			</a>
 		</li>
 		<li className="nav-item">
-			<a className={generateLinkClass(activeTab,CHART_VIEW)} href="#"
-			onClick={(event)=>{event.preventDefault();onTabChange(CHART_VIEW)}}>
+			<a 
+				className={generateLinkClass(activeTab,CHART_VIEW)} 
+				href="#"
+				onClick={(event)=>{event.preventDefault();onTabChange(CHART_VIEW)}}>
 				<Ionicon className="rounded-circle mr-2"
 					fontSize="25px"
 					color={"#007bff"}
@@ -32,4 +36,8 @@ const ViewTab=({activeTab ,onTabChange})=>(
 	</ul>
 )
 
+ViewTab.propTypes = {
+	activeTab:PropTypes.string.isRequired,
+	onTabChange:PropTypes.func.isRequired
+}
 export default ViewTab;
