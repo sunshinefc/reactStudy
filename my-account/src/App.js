@@ -5,6 +5,7 @@ import './App.css';
 import {LIST_VIEW,CHART_VIEW} from './utility';
 import PriceList from './components/PriceList';
 import ViewTab from './components/ViewTab';
+import MonthPicker from './components/MonthPicker';
 
 const items=[
   {
@@ -45,17 +46,22 @@ const items=[
   }
 ]
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>welcome to react</h1>
-      </header>
-      <ViewTab activeTab={LIST_VIEW}
-        onTabChange={(view)=>{console.log(view)}}/>
-    </div>
-  );
+class App extends React.Component {
+  render(){
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1>welcome to react</h1>
+        </header>
+        <MonthPicker
+         year={2018}
+         month={5}/>
+        <ViewTab activeTab={LIST_VIEW}
+          onTabChange={(view)=>{console.log(view)}}/>
+      </div>
+    );
+  }
 }
 
 export default App;
