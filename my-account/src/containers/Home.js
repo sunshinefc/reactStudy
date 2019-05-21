@@ -79,6 +79,16 @@ class Home extends React.Component {
 	          	</div>
 	         
 	        </header>
+	        <div className="content-area py-3 px-3">
+	        	<ViewTab activeTab={LIST_VIEW} onTabChange={()=>{}}/>
+	        	<CreateBtn onClick={()=>{}}/>
+	        	<PriceList 
+					items={items}
+					onModifyItem={()=>{}}
+					onDeleteItem={()=>{}}
+	        	/>
+
+	        </div>
     	</React.Fragment>
     );
   }
