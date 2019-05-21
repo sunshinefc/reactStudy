@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../logo.svg';
 
-import {LIST_VIEW,CHART_VIEW,TYPE_INCOME,TYPE_OUTCOME,parseToYearAndMonth} from '../utility';
+import {LIST_VIEW,CHART_VIEW,TYPE_INCOME,TYPE_OUTCOME,parseToYearAndMonth,padLeft} from '../utility';
 import PriceList from '../components/PriceList';
 import ViewTab from '../components/ViewTab';
 import MonthPicker from '../components/MonthPicker';
@@ -27,14 +27,14 @@ const items=[
     "id":1,
     "title":"去云南旅游",
     "price":200,
-    "date":"2018-09-12",
+    "date":"2019-05-12",
     "cid":1
   },
   {
     "id":2,
     "title":"去云南旅游",
     "price":400,
-    "date":"2018-09-12",
+    "date":"2019-04-12",
     "cid":1
   },
   {
@@ -46,6 +46,14 @@ const items=[
   }
 ]
 
+const newItem={
+	"id":4,
+    "title":"新添加的项目",
+    "price":300,
+    "date":"2018-09-12",
+    "cid":1
+}
+
 class Home extends React.Component {
 	constructor(props){
 		super(props)
@@ -55,11 +63,52 @@ class Home extends React.Component {
 			tabView:LIST_VIEW,
 		}
 	}
+
+	changeView=(view)=>{
+		this.setState({
+			tabView:view,
+		})
+
+	}
+
+	changeDate=(year,month)=>{
+		this.setState({
+			currentDate:{year,month}
+		})
+
+	}
+	createItem=()=>{
+		this.setState({
+			items:[newItem,...this.state.items]
+		})
+
+	}
+	modifyItem=(modifyItem)=>{
+		const modifyItems=this.state.items.map(item=>{
+			if(item.id===modifyItem.id){
+				return {...item,title:'更新后的标题'}
+			}else{
+				return item
+			}
+		})
+		this.setState({
+			items:modifyItems
+		})
+
+	}
+	deleteItem=(deletedItem)=>{
+		const filterredItems=this.state.items.filter(item=>item.id!=deletedItem.id)
+		this.setState({
+			items:filterredItems
+		})
+	}
   render(){
   	const {items,currentDate,tabView}=this.state
   	const itemsWithCategory=items.map(item=>{
   		item.category=categoies[item.cid]
   		return item
+  	}).filter(item=>{
+  		return item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
   	})
   	let totalIncome=0,totalOutcome=0
   	itemsWithCategory.forEach(item=>{
@@ -80,7 +129,7 @@ class Home extends React.Component {
 						<MonthPicker 
 							year={currentDate.year} 
 							month={currentDate.month} 
-							onChange={()=>{}}/>
+							onChange={this.changeDate}/>
 					</div>
 					<div className="col">
 						<TotalPrice 
@@ -92,13 +141,20 @@ class Home extends React.Component {
 	         
 	        </header>
 	        <div className="content-area py-3 px-3">
-	        	<ViewTab activeTab={tabView} onTabChange={()=>{}}/>
-	        	<CreateBtn onClick={()=>{}}/>
-	        	<PriceList 
-					items={itemsWithCategory}
-					onModifyItem={()=>{}}
-					onDeleteItem={()=>{}}
-	        	/>
+	        	<ViewTab activeTab={tabView} onTabChange={this.changeView}/>
+	        	<CreateBtn onClick={this.createItem}/>
+	        	{tabView===LIST_VIEW &&
+	        		<PriceList 
+						items={itemsWithCategory}
+						onModifyItem={this.modifyItem}
+						onDeleteItem={this.deleteItem}
+		        	/>
+	        	}
+	        	{tabView===CHART_VIEW &&
+	        		<h1>这里是图标</h1>
+
+	        	}
+	        	
 
 	        </div>
     	</React.Fragment>
