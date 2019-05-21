@@ -56,7 +56,8 @@ class App extends React.Component {
         </header>
         <MonthPicker
          year={2018}
-         month={5}/>
+         month={5}
+         onChange={(year,month)=>{console.log(year,month)}}/>
         <ViewTab activeTab={LIST_VIEW}
           onTabChange={(view)=>{console.log(view)}}/>
       </div>
