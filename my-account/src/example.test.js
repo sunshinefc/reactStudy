@@ -17,5 +17,5 @@ test('test number',()=>{
 })
 
 test('test object',()=>{
-	expect({name:'viking',age:30}).toEqual({name:'viking',age:30})
+	expect({name:'viking',age:18}).toEqual({name:'viking',age:18})
 })
