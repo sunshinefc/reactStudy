@@ -18,5 +18,4 @@ describe('test PriceList component',()=>{
 	beforeEach(()=>{
 		wrapper=shallow(<PriceList {...props}/>)
 	})
-
 })
